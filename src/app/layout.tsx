@@ -11,7 +11,7 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "논문한입 | 논문의 본질을 이해하는 가장 빠른 방법",
-  description: "논문 요약 플랫폼",
+  description: "AI 논문 요약 플랫폼",
 };
 
 export default function RootLayout({
