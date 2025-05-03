@@ -22,7 +22,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={pretendard.variable}>
       <body className={pretendard.className}>
-        {" "}
         <div className="w-full h-[4.375rem] px-[20rem] bg-[#1F325C] flex justify-between items-center">
           <Image
             src="/images/논문한입title.png"
@@ -33,6 +32,7 @@ export default function RootLayout({
           <h1 className="text-[#fffef8] text-[1.25rem] font-bold">header</h1>
         </div>
         {children}
+        <footer className="w-full h-[4.375rem] px-[20rem] bg-[#1F325C] flex justify-between items-center"></footer>
       </body>
     </html>
   );
