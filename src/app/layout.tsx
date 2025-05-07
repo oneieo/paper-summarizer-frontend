@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Image from "next/image";
+import Link from "next/link";
+
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
   display: "swap",
@@ -21,17 +23,43 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={pretendard.variable}>
-      <body className={pretendard.className}>
-        <div className="w-full h-[4.375rem] px-[20rem] bg-[#1F325C] flex justify-between items-center">
-          <Image
-            src="/images/논문한입title.png"
-            alt="logo"
-            width={120}
-            height={120}
-          />
-          <h1 className="text-[#fffef8] text-[1.25rem] font-bold">header</h1>
+      <body className={`${pretendard.className} min-h-screen flex flex-col `}>
+        <div className="w-full h-[4.375rem] px-4 md:px-20 xl:px-[20rem] bg-[#1F325C] flex justify-between items-center">
+          <Link href={"/"}>
+            <Image
+              src="/images/논문한입title.png"
+              alt="logo"
+              width={120}
+              height={120}
+              priority
+            />
+          </Link>
+          <div className="flex items-center justify-start gap-[5rem] pr-4 md:pr-8 xl:pr-[20rem]">
+            <Link href={"/"}>
+              <h1 className="text-[#fffef8] text-[1.125rem] font-semibold">
+                Home
+              </h1>
+            </Link>
+            <Link href={"/papers"}>
+              <h1 className="text-[#fffef8] text-[1.125rem] font-semibold">
+                논문 둘러보기
+              </h1>
+            </Link>
+            <Link href={"/papers/upload"}>
+              <h1 className="text-[#fffef8] text-[1.125rem] font-semibold">
+                논문 요약하기
+              </h1>
+            </Link>
+          </div>
+          <div className="flex items-center justify-center gap-[1.25rem]">
+            <Link href={"/login"}>
+              <h1 className="text-[#fffef8] text-[1.125rem] font-semibold">
+                Login
+              </h1>
+            </Link>
+          </div>
         </div>
-        {children}
+        <main className="flex-1">{children}</main>
         <footer className="w-full h-[4.375rem] px-[20rem] bg-[#1F325C] flex justify-between items-center"></footer>
       </body>
     </html>
