@@ -1,13 +1,15 @@
 "use client";
 import Image from "next/image";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useFileStore } from "@/store/fileStore";
-import { access } from "fs";
+import { useAuthStore } from "@/store/authStore";
+import { apiUrl } from "@/app/(auth)/_components/Login";
 
 const PaperUpload = () => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const { file, setFile } = useFileStore();
+  const { accessToken, setAccessToken } = useAuthStore();
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -50,26 +52,43 @@ const PaperUpload = () => {
   ) => {
     e.preventDefault();
     console.log("논문 업로드 !!!");
+
     const formData = new FormData();
     formData.append("file", file);
     if (file?.name) formData.append("title", file.name);
 
-    const response = await fetch("/api/papers", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    try {
+      const response = await fetch(`${apiUrl}/api/papers`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         credentials: "include",
-      },
-      body: formData,
-    });
+        body: formData,
+      });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
+      if (!response.ok) {
+        const errorData = await response
+          .json()
+          .catch(() => ({ message: "서버 오류가 발생했습니다." }));
+        throw new Error(errorData.message || `HTTP 오류: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("업로드 성공:", result);
+      return result;
+    } catch (error) {
+      console.error("업로드 오류:", error);
+      throw error;
     }
-
-    return await response.json();
   };
+
+  useEffect(() => {
+    setAccessToken(
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNDA2Mjk5MTciLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNzQ2Nzg2MTk5fQ.4P8bO2bYfrq2NSEBOPGZprzHQ7cNs2d9n_QSEigoimu368ehn4V9ue1tjM9hvWOjQicSCVax3Lov0s47u5FbZQ"
+    );
+    console.log(file, accessToken);
+  }, [file, accessToken]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-[#fcfbf6] py-12">
@@ -116,6 +135,7 @@ const PaperUpload = () => {
           </span>
         </div>
       )}
+      {/* TODO: 스타일 수정 필요 */}
       <button
         className={`xl:w-[80rem] w-[56.25rem] mt-8 px-6 py-3 rounded-lg text-lg font-semibold transition-colors ${
           file
@@ -123,7 +143,9 @@ const PaperUpload = () => {
             : "bg-gray-300 text-white cursor-not-allowed"
         }`}
         disabled={!file}
-        onClick={() => handleUploadPaperBtn(file, accessToken)}
+        onClick={(e) =>
+          handleUploadPaperBtn(e, file as File, accessToken as string)
+        }
       >
         업로드 및 분석 시작
       </button>
