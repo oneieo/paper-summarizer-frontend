@@ -26,6 +26,14 @@
   }
 }
 
+.Toastify__toast {
+  min-width: 800px;
+  min-height: 60px; /* 기본값은 48px */
+  font-size: 1.25rem; /* 글씨 크기도 키우기 */
+  padding: 24px 32px; /* 패딩 조절 */
+  top: 60px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
