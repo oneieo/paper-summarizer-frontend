@@ -1,11 +1,8 @@
 import React from "react";
+import PaperUpload from "../_components/PaperUpload";
 
 const page = () => {
-  return (
-    <div>
-      <h1>upload</h1>
-    </div>
-  );
+  return <PaperUpload />;
 };
 
 export default page;
