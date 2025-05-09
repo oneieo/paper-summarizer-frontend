@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const PaperAnalyze = () => {
   const [progress, setProgress] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [, setIsLoading] = useState<boolean>(false);
   const { paperId } = useFileStore();
   const hasRequestedRef = useRef<boolean>(false);
   const router = useRouter();
