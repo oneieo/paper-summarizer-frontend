@@ -1,11 +1,8 @@
+import PaperEdit from "@/app/papers/_components/PaperEdit";
 import React from "react";
 
 const page = () => {
-  return (
-    <div>
-      <h1>edit</h1>
-    </div>
-  );
+  return <PaperEdit />;
 };
 
 export default page;
