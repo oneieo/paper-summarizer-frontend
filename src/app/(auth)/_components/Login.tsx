@@ -5,23 +5,24 @@ export const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const Login = () => {
   const handleGithubLoginBtn = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/api/auth/github`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          credentials: "include",
-        },
-      });
+    // try {
+    //   const response = await fetch(`${apiUrl}/api/auth/github`, {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       credentials: "include",
+    //     },
+    //   });
 
-      if (response.ok) {
-        window.location.href = `${apiUrl}/api/auth/github`;
-      } else {
-        console.error("GitHub 로그인 요청 실패");
-      }
-    } catch (error) {
-      console.error("GitHub 로그인 에러:", error);
-    }
+    //   if (response.ok) {
+    //     window.location.href = `${apiUrl}/api/auth/github`;
+    //   } else {
+    //     console.error("GitHub 로그인 요청 실패");
+    //   }
+    // } catch (error) {
+    //   console.error("GitHub 로그인 에러:", error);
+    // }
+    window.location.href = `${apiUrl}/api/auth/github`;
   };
 
   return (

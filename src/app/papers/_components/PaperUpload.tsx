@@ -5,10 +5,12 @@ import { toast } from "react-toastify";
 import { useFileStore } from "@/store/fileStore";
 import { useAuthStore } from "@/store/authStore";
 import { apiUrl } from "@/app/(auth)/_components/Login";
+import { useRouter } from "next/navigation";
 
 const PaperUpload = () => {
+  const router = useRouter();
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const { file, setFile } = useFileStore();
+  const { file, setFile, setPaperId } = useFileStore();
   const { accessToken, setAccessToken } = useAuthStore();
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -51,7 +53,7 @@ const PaperUpload = () => {
     accessToken: string
   ) => {
     e.preventDefault();
-    console.log("논문 업로드 !!!");
+    console.log("논문 업로드 버튼 클릭");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -76,6 +78,12 @@ const PaperUpload = () => {
 
       const result = await response.json();
       console.log("업로드 성공:", result);
+      if (result) {
+        console.log(result.data.id);
+        setPaperId(result.data.id);
+      }
+      router.push("/papers/upload/analyze");
+      toast.success("논문 업로드가 성공적으로 완료되었습니다.");
       return result;
     } catch (error) {
       console.error("업로드 오류:", error);
@@ -84,11 +92,14 @@ const PaperUpload = () => {
   };
 
   useEffect(() => {
-    setAccessToken(
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNDA2Mjk5MTciLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNzQ2Nzg2MTk5fQ.4P8bO2bYfrq2NSEBOPGZprzHQ7cNs2d9n_QSEigoimu368ehn4V9ue1tjM9hvWOjQicSCVax3Lov0s47u5FbZQ"
-    );
+    // TODO: 로그인 완료시 토큰 저장하도록 수정 (토큰 노출X)
+
     console.log(file, accessToken);
-  }, [file, accessToken]);
+    setAccessToken(
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNDA2Mjk5MTciLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNzQ2ODAwNTQxfQ.Z4Oe_zMeh9H768ggHeC7phHRQq09tfaeL4dkoHYMbN5CZrOfdb8XY_GagEAnyrST85vBR7nEQe6M1h9SJgZi7Q"
+    );
+    //esLint-disabled-next-line
+  }, [file]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-[#fcfbf6] py-12">

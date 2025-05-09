@@ -1,11 +1,8 @@
 import React from "react";
+import PaperAnalyze from "../../_components/PaperAnalyze";
 
 const page = () => {
-  return (
-    <div>
-      <h1>analyze</h1>
-    </div>
-  );
+  return <PaperAnalyze />;
 };
 
 export default page;
