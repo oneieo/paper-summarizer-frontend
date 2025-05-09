@@ -1,7 +1,6 @@
 "use client";
 import { useAuthStore } from "@/store/authStore";
 import React, { useEffect } from "react";
-import Cookies from "js-cookie";
 
 interface HomeProps {
   serverAccessToken?: string;
