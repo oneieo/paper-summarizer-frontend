@@ -4,12 +4,14 @@ import ProgressBar from "./ProgressBar";
 import { apiUrl } from "@/app/(auth)/_components/Login";
 import { useFileStore } from "@/store/fileStore";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const PaperAnalyze = () => {
   const [progress, setProgress] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { paperId } = useFileStore();
   const hasRequestedRef = useRef<boolean>(false);
+  const router = useRouter();
 
   const handleAnalyze = async () => {
     setIsLoading(true);
@@ -47,6 +49,7 @@ const PaperAnalyze = () => {
       clearInterval(interval);
       setProgress(100);
       toast.success("분석이 완료되었습니다");
+      router.push(`/papers/upload/edit/${paperId}`);
     } catch (error) {
       console.error("분석 중 오류 발생:", error);
       toast.error("분석 요청 중 오류가 발생했습니다");

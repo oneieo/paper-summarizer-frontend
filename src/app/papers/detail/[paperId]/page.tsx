@@ -1,11 +1,8 @@
 import React from "react";
+import PaperDetail from "../../_components/PaperDetail";
 
 const page = () => {
-  return (
-    <div>
-      <h1>detail</h1>
-    </div>
-  );
+  return <PaperDetail />;
 };
 
 export default page;
