@@ -1,7 +1,6 @@
 "use client";
 import { useAuthStore } from "@/store/authStore";
 import React, { useEffect } from "react";
-import Cookies from "js-cookie";
 
 interface HomeProps {
   serverAccessToken?: string;
@@ -14,7 +13,7 @@ const Home = ({ serverAccessToken }: HomeProps) => {
   useEffect(() => {
     if (serverAccessToken) {
       setAccessToken(serverAccessToken);
-      console.log("Access token saved from server component");
+      console.log("Access token saved from server component !");
     } else {
       console.log("No access token from server component");
     }
