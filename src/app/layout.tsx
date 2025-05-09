@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
@@ -59,7 +60,9 @@ export default function RootLayout({
             </Link>
           </div>
         </div>
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          {children} <ToastContainer position="top-center" autoClose={2000} />
+        </main>
         <footer className="w-full h-[4.375rem] px-[20rem] bg-[#1F325C] flex justify-between items-center"></footer>
       </body>
     </html>
